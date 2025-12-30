@@ -4,1026 +4,153 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LHS Machine Learning Club</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --secondary: #8b5cf6;
-            --accent: #06b6d4;
-            --dark: #0f172a;
-            --light: #f1f5f9;
-            --text: #334155;
-            --border: #e2e8f0;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: var(--text);
-            background: #ffffff;
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            /* Stronger background gradients for overall atmosphere */
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(147, 51, 234, 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.2) 0%, transparent 40%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-
-        /* Navigation */
-        nav {
-            background: var(--dark);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-        }
-
-        .logo span {
-            color: var(--accent);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-            font-weight: 500;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        .mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 6rem 2rem;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            font-weight: 800;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.875rem 2rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: inline-block;
-            cursor: pointer;
-            border: none;
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background: white;
-            color: var(--primary);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-        }
-
-        .btn-secondary:hover {
-            background: white;
-            color: var(--primary);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        /* Section Styles */
-        section {
-            display: none;
-        }
-
-        section.active {
-            display: block;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .section-header p {
-            font-size: 1.125rem;
-            color: var(--text);
-        }
-
-        /* Grid Layouts */
-        .grid {
-            display: grid;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .grid-2 {
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        }
-
-        .grid-3 {
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        }
-
-        /* Cards */
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-            border: 1px solid var(--border);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-        }
-
-        .card h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .card p {
-            color: var(--text);
-            line-height: 1.8;
-        }
-
-        /* About Section */
-        .bio-form-link {
-            background: var(--light);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .bio-form-link a {
-            color: var(--primary);
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .bio-form-link a:hover {
-            text-decoration: underline;
-        }
-
-        /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .contact-item {
-            text-align: center;
-            padding: 2rem;
-            background: var(--light);
-            border-radius: 12px;
-            transition: all 0.3s;
-        }
-
-        .contact-item:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .contact-item i {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .contact-item a {
-            color: inherit;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        /* Events Calendar */
-        .calendar {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .event-item {
-            padding: 1.5rem;
-            border-left: 4px solid var(--primary);
-            background: var(--light);
-            margin-bottom: 1rem;
-            border-radius: 8px;
-        }
-
-        .event-item h4 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .event-date {
-            color: var(--text);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Slides Section */
-        .slide-item {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .slide-item h4 {
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .slide-date {
-            color: var(--text);
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Showcase */
-        .showcase-item {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-        }
-
-        .showcase-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-        }
-
-        .showcase-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1.5rem;
-        }
-
-        .showcase-body {
-            padding: 1.5rem;
-        }
-
-        .showcase-tag {
-            display: inline-block;
-            background: var(--accent);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            margin-right: 0.5rem;
-        }
-
-        /* Alumni */
-        .alumni-card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            border-left: 4px solid var(--primary);
-        }
-
-        .alumni-card h3 {
-            color: var(--dark);
-            margin-bottom: 1rem;
-        }
-
-        .alumni-detail {
-            margin: 0.5rem 0;
-            color: var(--text);
-        }
-
-        .alumni-detail strong {
-            color: var(--primary);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 3rem 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent);
-        }
-
-        /* Form Styles */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .form-group input,
-        .form-group textarea {
+        
+        /* The Intense Aura "Spotlight" */
+        .aura-container {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: inherit;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--dark);
-                padding: 1rem;
-                gap: 1rem;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .mobile-toggle {
-                display: block;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .section-header h2 {
-                font-size: 2rem;
-            }
-        }
-
-        /* Image Gallery */
-        .image-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .gallery-item {
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            aspect-ratio: 4/3;
-            background: var(--light);
+            max-width: 1200px;
+            height: 600px;
+            z-index: -1;
             display: flex;
-            align-items: center;
             justify-content: center;
-            color: var(--text);
-            font-weight: 500;
+            align-items: center;
         }
 
-        .challenge-card {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
+        .aura-purple {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.4) 0%, transparent 60%);
+            filter: blur(80px);
+            animation: pulse 8s infinite alternate;
         }
 
-        .challenge-card h3 {
-            color: white;
-            margin-bottom: 1rem;
+        .aura-blue {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 60%);
+            filter: blur(60px);
+            margin-left: 200px;
         }
 
-        .challenge-meta {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
         }
 
-        .challenge-badge {
-            background: rgba(255,255,255,0.2);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
+        .glass-card {
+            background: rgba(15, 23, 42, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="#home" class="logo">LHS <span>ML Club</span></a>
-            <button class="mobile-toggle" onclick="toggleMenu()">☰</button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home" onclick="showSection('home')">Home</a></li>
-                <li><a href="#about" onclick="showSection('about')">About</a></li>
-                <li><a href="#get-started" onclick="showSection('get-started')">Get Started</a></li>
-                <li><a href="#events" onclick="showSection('events')">Events</a></li>
-                <li><a href="#slides" onclick="showSection('slides')">Slides</a></li>
-                <li><a href="#showcase" onclick="showSection('showcase')">Showcase</a></li>
-                <li><a href="#challenges" onclick="showSection('challenges')">Challenges</a></li>
-                <li><a href="#alumni" onclick="showSection('alumni')">Alumni</a></li>
-                <li><a href="#contact" onclick="showSection('contact')">Contact</a></li>
-            </ul>
+<body class="text-slate-200">
+
+<nav class="border-b border-slate-800/50 p-4 sticky top-0 bg-slate-950/60 backdrop-blur-xl z-50">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            
+            <div class="flex items-center gap-3">
+                <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-[0_0_15px_rgba(147,51,234,0.6)]">
+                    <rect x="15" y="25" width="70" height="60" rx="20" fill="#0f172a" stroke="#3b82f6" stroke-width="4"/>
+                    <circle cx="35" cy="55" r="6" fill="#60a5fa">
+                        <animate attributeName="opacity" values="1;0.2;1" dur="4s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="65" cy="55" r="6" fill="#60a5fa">
+                        <animate attributeName="opacity" values="1;0.2;1" dur="4s" repeatCount="indefinite" />
+                    </circle>
+                    <line x1="50" y1="25" x2="50" y2="10" stroke="#a855f7" stroke-width="4" />
+                    <circle cx="50" cy="10" r="9" fill="#a855f7">
+                        <animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite" />
+                        <animate attributeName="fill" values="#a855f7;#d8b4fe;#a855f7" dur="2s" repeatCount="indefinite" />
+                    </circle>
+                </svg>
+                <h1 class="text-xl font-extrabold text-white tracking-tighter uppercase ">
+                    LHS <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 decoration-purple-500/50">ML CLUB</span>
+                </h1>
+            </div>
+
+<div class="hidden md:flex space-x-6 text-sm font-medium">
+    <a href="index.html" class="text-white border-b-2 border-purple-500 pb-1">Home</a>
+    <a href="about.html" class="text-slate-400 hover:text-white transition">About Us</a>
+    <a href="events.html" class="text-slate-400 hover:text-white transition">Events</a>
+    <a href="slides.html" class="text-slate-400 hover:text-white transition">Slides</a>
+    <a href="contact.html" class="text-slate-400 hover:text-white transition">Contact</a>
+</div>
         </div>
     </nav>
 
-    <!-- Home Section -->
-    <section id="home" class="active">
-        <div class="hero">
-            <h1>LHS Machine Learning Club</h1>
-            <p>Exploring the future of AI and Machine Learning together</p>
-            <div class="cta-buttons">
-                <a href="#get-started" onclick="showSection('get-started')" class="btn btn-primary">Get Started</a>
-                <a href="#events" onclick="showSection('events')" class="btn btn-secondary">View Events</a>
-            </div>
+    <div class="relative">
+        <div class="aura-container">
+            <div class="aura-purple"></div>
+            <div class="aura-blue"></div>
         </div>
 
-        <div class="container">
-            <div class="section-header">
-                <h2>Welcome to ML Club</h2>
-                <p>Learn, build, and innovate with machine learning</p>
+        <header class="relative max-w-5xl mx-auto py-32 px-4 text-center">
+            <h2 class="text-6xl md:text-8xl font-extrabold text-white tracking-tight mb-4 drop-shadow-2xl">
+                LHS Machine Learning Club
+            </h2>
+            <p class="text-2xl md:text-3xl text-blue-400 font-bold tracking-widest mb-12 uppercase">
+                Explore the Frontiers of AI
+            </p>
+            
+            <div class="glass-card p-10 rounded-[3rem] max-w-xl mx-auto shadow-2xl border-t-purple-500/30">
+                <p class="text-purple-400 font-mono text-sm mb-3 uppercase tracking-[0.3em] font-bold">Meeting Information</p>
+                <p class="text-3xl font-bold text-white mb-2">Room: 305 </p>
+                <p class="text-xl text-slate-300">Fridays @ Lunch</p>
             </div>
+        </header>
+    </div>
 
-            <div class="grid grid-3">
-                <div class="card">
-                    <h3>🚀 Learn</h3>
-                    <p>Access our comprehensive bootcamp materials and weekly presentations to build your ML skills from the ground up.</p>
-                </div>
-                <div class="card">
-                    <h3>🛠️ Build</h3>
-                    <p>Work on real projects, participate in hackathons, and get hands-on experience with cutting-edge ML technologies.</p>
-                </div>
-                <div class="card">
-                    <h3>🤝 Connect</h3>
-                    <p>Join a community of passionate learners, collaborate on projects, and network with alumni in the field.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <div class="section-header">
-                <h2>About Us</h2>
-                <p>Who we are and what we do</p>
-            </div>
-
-            <div class="card">
-                <h3>Our Mission</h3>
-                <p>The LHS Machine Learning Club is dedicated to fostering a community of students passionate about artificial intelligence and machine learning. We provide hands-on learning experiences, collaborative projects, and opportunities to explore the latest developments in AI technology.</p>
-                
-                <p style="margin-top: 1rem;">Whether you're a complete beginner or have experience in programming and mathematics, our club offers resources and support to help you grow your skills and pursue your interests in machine learning.</p>
-            </div>
-
-            <div class="bio-form-link">
-                <h3>Join Our Team</h3>
-                <p>Interested in becoming an officer or contributing to the club? Submit your bio and let us know about your interests!</p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdc81pbPIATvulOjL1YFcUzWVknSGtAvX_2OUZTCprqAmFA5A/viewform?usp=header" target="_blank">Submit Your Bio →</a>
-            </div>
-
-            <div class="grid grid-2">
-                <div class="card">
-                    <h3>What We Offer</h3>
-                    <ul style="list-style-position: inside; color: var(--text);">
-                        <li>Weekly meetings and presentations</li>
-                        <li>Beginner-friendly bootcamps</li>
-                        <li>Hackathons and competitions</li>
-                        <li>Research paper workshops</li>
-                        <li>Project collaboration opportunities</li>
-                        <li>Social events and networking</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>Who Can Join</h3>
-                    <p>ML Club is open to all LHS students regardless of experience level. Whether you're curious about AI, want to build projects, or aspire to pursue ML in college and beyond, there's a place for you here.</p>
-                    <p style="margin-top: 1rem;">No prior programming experience required—just bring your curiosity and enthusiasm!</p>
-                </div>
-            </div>
+<section class="max-w-4xl mx-auto py-12 px-4">
+        <div class="p-12 bg-gradient-to-br from-purple-900/30 via-slate-900/90 to-blue-900/30 border border-white/10 rounded-[3rem] shadow-2xl backdrop-blur-md relative overflow-hidden">
+            <div class="absolute -top-24 -left-24 w-64 h-64 bg-purple-600/20 blur-[80px]"></div>
+            
+            <h3 class="text-3xl font-extrabold text-white mb-2 tracking-tight">The LHS ML Goal</h3>
+            <p class="text-blue-400 font-mono text-sm mb-8 uppercase tracking-[0.2em] font-bold">Applied Development + Algorithmic Theory</p>
+            
+            <p class="text-slate-200 leading-relaxed text-2xl font-light">
+                We believe that <span class="text-white font-semibold">Machine Learning</span> should be learned through both <span class=" text-purple-300">hands-on coding experiences</span> and an understanding of the <span class=" text-blue-300">underlying mathematical foundations</span>.
+            </p>
         </div>
     </section>
-
-    <!-- Get Started Section -->
-    <section id="get-started">
-        <div class="container">
-            <div class="section-header">
-                <h2>Get Started</h2>
-                <p>Resources for beginners and newcomers</p>
+    <!-- <section class="max-w-6xl mx-auto py-24 px-4">
+        <h3 class="text-3xl font-bold text-white mb-12 text-center">Recently Reviewed Research Papers</h3>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="aspect-square glass-card rounded-[2rem] flex flex-col items-center justify-center p-4 group hover:border-blue-500 transition">
+                <div class="w-full h-full bg-slate-800/50 rounded-2xl flex items-center justify-center text-slate-500 font-bold tracking-tighter italic">image.JPG</div>
             </div>
-
-            <div class="card">
-                <h3>Bootcamp Materials</h3>
-                <p>New to machine learning? Start here with our introductory bootcamp slides and materials designed for students with little to no experience.</p>
+            <div class="aspect-square glass-card rounded-[2rem] flex flex-col items-center justify-center p-4 group hover:border-purple-500 transition">
+                <div class="w-full h-full bg-slate-800/50 rounded-2xl flex items-center justify-center text-slate-500 font-bold tracking-tighter italic">image.JPG</div>
             </div>
-
-            <div class="grid grid-2">
-                <div class="slide-item">
-                    <h4>Introduction to Machine Learning</h4>
-                    <p class="slide-date">Bootcamp Session 1</p>
-                    <p>Learn the fundamentals of ML, including supervised and unsupervised learning, and key concepts like training and testing data.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">View Slides</a>
-                </div>
-
-                <div class="slide-item">
-                    <h4>Python for ML Basics</h4>
-                    <p class="slide-date">Bootcamp Session 2</p>
-                    <p>Get started with Python programming, NumPy, and pandas—the essential tools for machine learning projects.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">View Slides</a>
-                </div>
-
-                <div class="slide-item">
-                    <h4>Your First Neural Network</h4>
-                    <p class="slide-date">Bootcamp Session 3</p>
-                    <p>Build your first neural network from scratch and understand how deep learning models work under the hood.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">View Slides</a>
-                </div>
-
-                <div class="slide-item">
-                    <h4>Real-World ML Projects</h4>
-                    <p class="slide-date">Bootcamp Session 4</p>
-                    <p>Explore practical applications of ML and learn how to approach your own projects with real datasets.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">View Slides</a>
-                </div>
-            </div>
-
-            <div class="card" style="margin-top: 2rem;">
-                <h3>Bootcamp Recap</h3>
-                <p>Check out photos from our recent bootcamp sessions!</p>
-                <div class="image-gallery">
-                    <div class="gallery-item">Bootcamp Photo 1</div>
-                    <div class="gallery-item">Bootcamp Photo 2</div>
-                    <div class="gallery-item">Bootcamp Photo 3</div>
-                    <div class="gallery-item">Bootcamp Photo 4</div>
-                </div>
+            <div class="aspect-square glass-card rounded-[2rem] flex flex-col items-center justify-center p-4 group hover:border-blue-500 transition">
+                <div class="w-full h-full bg-slate-800/50 rounded-2xl flex items-center justify-center text-slate-500 font-bold tracking-tighter italic">group_photo_:).JPG</div>
             </div>
         </div>
-    </section>
+    </section> -->
 
-    <!-- Events Section -->
-    <section id="events">
-        <div class="container">
-            <div class="section-header">
-                <h2>Events & Calendar</h2>
-                <p>Upcoming meetings, hackathons, and social events</p>
-            </div>
-
-            <div class="calendar">
-                <h3 style="margin-bottom: 1.5rem; color: var(--dark);">Upcoming Events</h3>
-                
-                <div class="event-item">
-                    <h4>Weekly ML Club Meeting</h4>
-                    <p class="event-date">📅 Every Thursday, 3:30 PM - 4:30 PM</p>
-                    <p>Join us for our regular club meetings featuring presentations, workshops, and project discussions.</p>
-                </div>
-
-                <div class="event-item">
-                    <h4>LHS ML Hackathon</h4>
-                    <p class="event-date">📅 Coming Soon</p>
-                    <p>Our annual machine learning hackathon where students compete to build innovative ML solutions. More details to be announced!</p>
-                </div>
-
-                <div class="event-item">
-                    <h4>Social Event: Game Night</h4>
-                    <p class="event-date">📅 TBD</p>
-                    <p>Relax and connect with fellow club members over games and snacks.</p>
-                </div>
-
-                <div class="event-item">
-                    <h4>Guest Speaker Series</h4>
-                    <p class="event-date">📅 Monthly</p>
-                    <p>Hear from industry professionals and alumni about their experiences in AI and ML.</p>
-                </div>
-            </div>
-
-            <div class="card" style="margin-top: 2rem;">
-                <h3>Past Events & Socials</h3>
-                <p>Photos and highlights from previous events will be added here.</p>
-                <div class="image-gallery" style="margin-top: 1rem;">
-                    <div class="gallery-item">Past Event 1</div>
-                    <div class="gallery-item">Past Event 2</div>
-                    <div class="gallery-item">Past Event 3</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Slides Section -->
-    <section id="slides">
-        <div class="container">
-            <div class="section-header">
-                <h2>Presentation Slides</h2>
-                <p>All slides from our ML Club meetings, organized chronologically</p>
-            </div>
-
-            <div class="slide-item">
-                <h4>Introduction to Neural Networks</h4>
-                <p class="slide-date">📅 December 2024</p>
-                <p>Deep dive into how neural networks learn and make predictions, including backpropagation and gradient descent.</p>
-                <a href="#" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">View Slides</a>
-            </div>
-
-            <div class="slide-item">
-                <h4>Computer Vision with CNNs</h4>
-                <p class="slide-date">📅 November 2024</p>
-                <p>Exploring convolutional neural networks and their applications in image recognition and processing.</p>
-                <a href="#" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">View Slides</a>
-            </div>
-
-            <div class="slide-item">
-                <h4>Natural Language Processing Basics</h4>
-                <p class="slide-date">📅 October 2024</p>
-                <p>Introduction to NLP concepts, tokenization, embeddings, and transformer models.</p>
-                <a href="#" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">View Slides</a>
-            </div>
-
-            <div class="slide-item">
-                <h4>Reinforcement Learning Workshop</h4>
-                <p class="slide-date">📅 September 2024</p>
-                <p>Learn about RL algorithms, Q-learning, and how agents learn through trial and error.</p>
-                <a href="#" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">View Slides</a>
-            </div>
-
-            <div class="card" style="margin-top: 2rem;">
-                <p style="text-align: center; color: var(--text);">More slides will be added as we present them in club meetings. Check back regularly for updates!</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Showcase Section -->
-    <section id="showcase">
-        <div class="container">
-            <div class="section-header">
-                <h2>Member Showcase</h2>
-                <p>Projects, papers, and achievements from our community</p>
-            </div>
-
-            <div class="grid grid-2">
-                <div class="showcase-item">
-                    <div class="showcase-header">
-                        <h3>Image Classification Project</h3>
-                        <span class="showcase-tag">Project</span>
-                    </div>
-                    <div class="showcase-body">
-                        <p><strong>Creator:</strong> Member Name</p>
-                        <p style="margin-top: 0.5rem;">Built a CNN-based classifier that achieves 95% accuracy on the CIFAR-10 dataset using PyTorch.</p>
-                        <a href="#" class="btn btn-primary" style="margin-top: 1rem;">View Project</a>
-                    </div>
-                </div>
-
-                <div class="showcase-item">
-                    <div class="showcase-header">
-                        <h3>Sentiment Analysis Research</h3>
-                        <span class="showcase-tag">Paper</span>
-                    </div>
-                    <div class="showcase-body">
-                        <p><strong>Author:</strong> Member Name</p>
-                        <p style="margin-top: 0.5rem;">Research paper exploring transformer-based models for social media sentiment classification.</p>
-                        <a href="#" class="btn btn-primary" style="margin-top: 1rem;">Read Paper</a>
-                    </div>
-                </div>
-
-                <div class="showcase-item">
-                    <div class="showcase-header">
-                        <h3>Recommendation System</h3>
-                        <span class="showcase-tag">In Progress</span>
-                    </div>
-                    <div class="showcase-body">
-                        <p><strong>Creator:</strong> Member Name</p>
-                        <p style="margin-top: 0.5rem;">Building a collaborative filtering system for movie recommendations using matrix factorization.</p>
-                    </div>
-                </div>
-
-                <div class="showcase-item">
-                    <div class="showcase-header">
-                        <h3>Alumni Spotlight: AI at Google</h3>
-                        <span class="showcase-tag">Alumni</span>
-                    </div>
-                    <div class="showcase-body">
-                        <p><strong>Alumni Name</strong> - Class of 2023</p>
-                        <p style="margin-top: 0.5rem;">Now working as an ML Engineer at Google, focusing on natural language understanding for Google Assistant.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" style="margin-top: 2rem;">
-                <h3>Submit Your Work</h3>
-                <p>Have a project, paper, or achievement you'd like to share? Let us know and we'll feature it in our showcase!</p>
-                <a href="#contact" onclick="showSection('contact')" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">Contact Us</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Challenges Section -->
-    <section id="challenges">
-        <div class="container">
-            <div class="section-header">
-                <h2>Challenges & Opportunities</h2>
-                <p>Hackathons, challenges, workshops, and project help</p>
-            </div>
-
-            <div class="challenge-card">
-                <h3>🏆 LHS ML Hackathon</h3>
-                <p>Our flagship event where students compete to build innovative machine learning solutions to real-world problems. Teams of 2-4 students work together over a weekend to create and present their projects.</p>
-                <div class="challenge-meta">
-                    <span class="challenge-badge">Team Event</span>
-                    <span class="challenge-badge">Weekend Format</span>
-                    <span class="challenge-badge">Prizes Available</span>
-                </div>
-            </div>
-
-            <div class="grid grid-2">
-                <div class="card">
-                    <h3>📊 Monthly Challenges</h3>
-                    <p>Take on our monthly ML challenges to test your skills and learn new techniques. Challenges range from beginner-friendly to advanced, covering topics like computer vision, NLP, and reinforcement learning.</p>
-                    <p style="margin-top: 1rem;"><strong>Current Challenge:</strong> Build a model to classify handwritten digits (MNIST dataset)</p>
-                </div>
-
-                <div class="card">
-                    <h3>📝 Research Paper Workshops</h3>
-                    <p>Learn how to read, understand, and implement techniques from cutting-edge ML research papers. We'll work through influential papers together and discuss their implications.</p>
-                    <p style="margin-top: 1rem;"><strong>Next Session:</strong> Understanding Transformer Architecture</p>
-                </div>
-
-                <div class="card">
-                    <h3>🛠️ Project Help Sessions</h3>
-                    <p>Working on your own ML project? Join our project help sessions where experienced members and officers provide guidance, troubleshooting, and feedback on your work.</p>
-                    <p style="margin-top: 1rem;"><strong>When:</strong> Every other Friday, 3:30 PM</p>
-                </div>
-
-                <div class="card">
-                    <h3>🌐 External Hackathons</h3>
-                    <p>We share opportunities for external ML and AI hackathons where you can compete with students from other schools and even professionals. Great for building your portfolio!</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">View Opportunities</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Alumni Section -->
-    <section id="alumni">
-        <div class="container">
-            <div class="section-header">
-                <h2>Our Alumni</h2>
-                <p>Where our former members are now</p>
-            </div>
-
-            <div class="grid grid-2">
-                <div class="alumni-card">
-                    <h3>John Doe</h3>
-                    <p class="alumni-detail"><strong>College:</strong> MIT</p>
-                    <p class="alumni-detail"><strong>Major:</strong> Computer Science & AI</p>
-                    <p class="alumni-detail"><strong>Current Work:</strong> Research Assistant in MIT's CSAIL lab, focusing on computer vision</p>
-                    <p class="alumni-detail"><strong>Officer Years:</strong> 2021-2023 (President 2022-2023)</p>
-                </div>
-
-                <div class="alumni-card">
-                    <h3>Jane Smith</h3>
-                    <p class="alumni-detail"><strong>College:</strong> Stanford University</p>
-                    <p class="alumni-detail"><strong>Major:</strong> Symbolic Systems</p>
-                    <p class="alumni-detail"><strong>Current Work:</strong> ML Engineering Intern at OpenAI</p>
-                    <p class="alumni-detail"><strong>Officer Years:</strong> 2020-2022 (VP 2021-2022)</p>
-                </div>
-
-                <div class="alumni-card">
-                    <h3>Alex Johnson</h3>
-                    <p class="alumni-detail"><strong>College:</strong> UC Berkeley</p>
-                    <p class="alumni-detail"><strong>Major:</strong> EECS</p>
-                    <p class="alumni-detail"><strong>Current Work:</strong> Working on autonomous systems at a robotics startup</p>
-                    <p class="alumni-detail"><strong>Officer Years:</strong> 2021-2023 (Treasurer 2022-2023)</p>
-                </div>
-
-                <div class="alumni-card">
-                    <h3>Sarah Lee</h3>
-                    <p class="alumni-detail"><strong>College:</strong> Carnegie Mellon University</p>
-                    <p class="alumni-detail"><strong>Major:</strong> Machine Learning</p>
-                    <p class="alumni-detail"><strong>Current Work:</strong> Graduate student researching natural language processing</p>
-                    <p class="alumni-detail"><strong>Officer Years:</strong> 2019-2021 (Secretary 2020-2021)</p>
-                </div>
-            </div>
-
-            <div class="card" style="margin-top: 2rem;">
-                <h3>Alumni: Update Your Info</h3>
-                <p>Are you an ML Club alum? We'd love to hear what you're up to! Share your current college, work, or research with us.</p>
-                <a href="#contact" onclick="showSection('contact')" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">Contact Us</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2>Get In Touch</h2>
-                <p>Connect with us on social media or send us a message</p>
-            </div>
-
-            <div class="contact-grid">
-                <div class="contact-item">
-                    <i>💬</i>
-                    <h3>Discord</h3>
-                    <a href="#">Join Server</a>
-                </div>
-                <div class="contact-item">
-                    <i>📸</i>
-                    <h3>Instagram</h3>
-                    <a href="#">@lhs_mlclub</a>
-                </div>
-                <div class="contact-item">
-                    <i>✉️</i>
-                    <h3>Email</h3>
-                    <a href="mailto:mlclub@lhs.edu">mlclub@lhs.edu</a>
-                </div>
-            </div>
-
-            <div class="card" style="margin-top: 3rem;">
-                <h3>Feedback Form</h3>
-                <p style="margin-bottom: 1.5rem;">Have suggestions, feedback, or questions? We'd love to hear from you!</p>
-                
-                <form id="feedbackForm">
-                    <div class="form-group">
-                        <label for="name">Name (Optional)</label>
-                        <input type="text" id="name" placeholder="Your name">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email (Optional)</label>
-                        <input type="email" id="email" placeholder="your.email@example.com">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Message *</label>
-                        <textarea id="message" placeholder="Your feedback, questions, or suggestions..." required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary">Send Feedback</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <h3 style="margin-bottom: 1rem;">LHS Machine Learning Club</h3>
-            <div class="footer-links">
-                <a href="#home" onclick="showSection('home')">Home</a>
-                <a href="#about" onclick="showSection('about')">About</a>
-                <a href="#events" onclick="showSection('events')">Events</a>
-                <a href="#showcase" onclick="showSection('showcase')">Showcase</a>
-                <a href="#contact" onclick="showSection('contact')">Contact</a>
-            </div>
-            <p style="margin-top: 1rem; opacity: 0.8;">&copy; 2024 LHS Machine Learning Club. All rights reserved.</p>
-        </div>
+    <footer class="py-12 text-center text-slate-500 text-sm border-t border-slate-900 bg-slate-950">
+        &copy; 2025 Lynbrook High School Machine Learning Club
     </footer>
 
-    <script>
-        // Navigation functionality
-        function showSection(sectionId) {
-            // Hide all sections
-            const sections = document.querySelectorAll('section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Show selected section
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Close mobile menu if open
-            document.getElementById('navLinks').classList.remove('active');
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('active');
-        }
-
-        // Form submission
-        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your feedback! We\'ll get back to you soon.');
-            this.reset();
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                if (href !== '#' && href.length > 1) {
-                    e.preventDefault();
-                }
-            });
-        });
-    </script>
 </body>
 </html>
